@@ -3,18 +3,16 @@ start = int(round(time.time() * 1000))
 
 def permute(letters, prefix):
   permutations = list()
-  for idx, letter in enumerate(letters):
-    permutations.append(''.join(sorted(prefix+letter)))
-    newletters = list(letters)
-    del newletters[idx]
-    permutations += permute(newletters, prefix+letter)
+  for x in range(0, len(letters)):
+    permutations.append(prefix+letters[x])
+    permutations += permute(letters[x+1:len(letters)], prefix+letters[x])
   return permutations
 
 word = raw_input('Jumble Me! (enter a word): ')
 letters = list(word)
 f = open('2of12.txt', 'r')
 possibilities = list()  
-allpermutations = permute(letters, '')
+allpermutations = permute(sorted(letters), '')
 allpermutations = list(set(allpermutations))
 
 keyeddict = {}
@@ -26,9 +24,8 @@ for dictword in f:
   keyeddict[index].append(dictword)
   
 for permutation in allpermutations:
-  index = ''.join(sorted(permutation))
-  if index in keyeddict:
-      possibilities += keyeddict[index]
+  if permutation in keyeddict:
+      possibilities += keyeddict[permutation]
 print possibilities
 
 end = int(round(time.time() * 1000))

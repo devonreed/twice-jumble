@@ -1,3 +1,6 @@
+import time
+start = int(round(time.time() * 1000))
+
 def permute(letters, prefix):
   permutations = list()
   for idx, letter in enumerate(letters):
@@ -19,3 +22,6 @@ for dictword in f:
       possibilities.append(dictword)
       break
 print possibilities
+
+end = int(round(time.time() * 1000))
+print "Total Time Elapsed: " + str(end-start) + "ms";
